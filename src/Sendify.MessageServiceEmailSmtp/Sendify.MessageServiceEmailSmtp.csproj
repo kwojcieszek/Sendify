@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sendify.MessageManager\Sendify.MessageManager.csproj" />
+    <Compile Remove="Class1.cs" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Sendify.MessageManager;
+﻿namespace Sendify.MessageService;
 
 public class Message
 {

@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Class1.cs" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sendify.MessageManager\Sendify.MessageManager.csproj" />
+    <ProjectReference Include="..\Sendify.MessageService\Sendify.MessageService.csproj" />
   </ItemGroup>
 
 </Project>
