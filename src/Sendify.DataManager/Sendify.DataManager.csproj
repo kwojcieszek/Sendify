@@ -10,4 +10,13 @@
     <Compile Remove="Class1.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
+    <PackageReference Include="MongoDB.EntityFrameworkCore" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sendify.Data\Sendify.Data.csproj" />
+  </ItemGroup>
+
 </Project>

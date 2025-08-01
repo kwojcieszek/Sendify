@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace Sendify.MessageManagerSmsDigiWr21;
+namespace Sendify.MessageServiceSmsDigiWr21;
 
 public class TerminalTcp : IStream
 {

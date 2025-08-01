@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessagesWorker", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessageServiceEmailSmtp", "Sendify.MessageServiceEmailSmtp\Sendify.MessageServiceEmailSmtp.csproj", "{3D98E79C-D4FF-47E6-84DF-C97C71205A26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sendify.Shared", "Sendify.Shared\Sendify.Shared.csproj", "{FB0A5B1D-E1BB-450D-A8C1-33C2A5FE70DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sendify.Settings", "Sendify.Settings\Sendify.Settings.csproj", "{83B089B4-079E-4832-8C34-5880E65E9F88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{3D98E79C-D4FF-47E6-84DF-C97C71205A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D98E79C-D4FF-47E6-84DF-C97C71205A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D98E79C-D4FF-47E6-84DF-C97C71205A26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB0A5B1D-E1BB-450D-A8C1-33C2A5FE70DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB0A5B1D-E1BB-450D-A8C1-33C2A5FE70DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB0A5B1D-E1BB-450D-A8C1-33C2A5FE70DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB0A5B1D-E1BB-450D-A8C1-33C2A5FE70DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B089B4-079E-4832-8C34-5880E65E9F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B089B4-079E-4832-8C34-5880E65E9F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B089B4-079E-4832-8C34-5880E65E9F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B089B4-079E-4832-8C34-5880E65E9F88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.18" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="9.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sendify.DataManager\Sendify.DataManager.csproj" />
+    <ProjectReference Include="..\Sendify.Data\Sendify.Data.csproj" />
+    <ProjectReference Include="..\Sendify.Settings\Sendify.Settings.csproj" />
+    <ProjectReference Include="..\Sendify.Shared\Sendify.Shared.csproj" />
   </ItemGroup>
 
 </Project>

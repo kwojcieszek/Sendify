@@ -1,6 +1,6 @@
 ﻿using System.IO.Ports;
 
-namespace Sendify.MessageManagerSmsDigiWr21;
+namespace Sendify.MessageServiceSmsDigiWr21;
 
 public class TerminalSerialPort : IStream
 {
@@ -27,8 +27,6 @@ public class TerminalSerialPort : IStream
         if (!_serialPort.IsOpen)
         {
             _serialPort.Open();
-
-            _serialPort.Write("Login\r\n");
         }
 
         return _serialPort.BytesToRead > 0 ? _serialPort.ReadByte() : -1;

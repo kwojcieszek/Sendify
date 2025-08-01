@@ -1,43 +1,35 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sendify.MessageService;
+using Sendify.Data;
 
-namespace Sendify.MessageManagerSmsDigiWr21;
+namespace Sendify.MessageServiceSmsDigiWr21;
 
 public class MessageSenderSmsDigiWr21 : IMessageSender
 {
     private readonly ILogger _logger;
     private readonly Wr21Service _wr21Service;
+    public MessageType ServiceType => MessageType.Sms;
 
-    public MessageSenderSmsDigiWr21(Wr21Service wr21Service, ILogger logger)
+    public MessageSenderSmsDigiWr21()
     {
-        _wr21Service = wr21Service;
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _wr21Service = new Wr21Service(new TerminalSerialPort("COM3"), string.Empty, string.Empty, false);
+        //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public bool SendMessage(Message message)
+    public ResultMessage SendMessage(Message message)
     {
         return SendMessageAsync(message).GetAwaiter().GetResult();
     }
 
-    public async Task<bool> SendMessageAsync(Message message)
+    public async Task<ResultMessage> SendMessageAsync(Message message)
     {
-        bool result = false;
-
-        await Task.Run(() =>
+        if (message?.Recipients == null)
         {
-            try
-            {
-                _wr21Service.SendSms(message.Recipients.FirstOrDefault() ?? string.Empty, message.Body);
+            return new ResultMessage(false, "Message or Recipients cannot be null.");
+        }
 
-                result = true;
-            }
+        var result = await _wr21Service.SendSms(message.Recipients.FirstOrDefault() ?? string.Empty, message.Body);
 
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error sending message: {Message}", e.Message);
-            }
-        });
-
-        return result;
+        return new ResultMessage(result, string.Empty);
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace Sendify.MessageService;
+﻿using Sendify.Data;
+
+namespace Sendify.MessageService;
 
 public interface IMessageSender
 {
-    public bool SendMessage(Message message);
-    public Task<bool> SendMessageAsync(Message message);
+    public MessageType ServiceType { get; }
+    public ResultMessage SendMessage(Message message);
+    public Task<ResultMessage> SendMessageAsync(Message message);
 }

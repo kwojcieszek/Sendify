@@ -1,21 +1,18 @@
-using Sendify.MessageManagerSmsDigiWr21;
 using Sendify.MessageService;
+using Sendify.Data;
+using Sendify.DataManager;
 
 namespace Sendify.MessagesWorker;
 
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
-    private IMessageSender _messageSender;
-
-    public Worker(ILogger<Worker> logger)
+    private readonly SenderService _senderService;
+    
+    public Worker(ILogger<Worker> logger, SenderService senderService)
     {
         _logger = logger;
-
-        //var wr21Service = new Wr21Service(new TerminalTcp("192.168.1.1"), "username", "password");
-        var wr21Service = new Wr21Service(new TerminalSerialPort("COM1"), "radwag", "radwag");
-
-        _messageSender = new MessageSenderSmsDigiWr21(wr21Service,logger);
+        _senderService = senderService;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,13 +24,9 @@ public class Worker : BackgroundService
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
             }
 
-            _messageSender.SendMessage(new Message
-            {
-               Recipients = ["48602174021"],
-               Body = "Test message from Sendify.MessagesWorker"
-            });
+            await _senderService.StartAsync(stoppingToken);
 
-            await Task.Delay(25000, stoppingToken);
+            await Task.Delay(1000, stoppingToken);
         }
     }
 }

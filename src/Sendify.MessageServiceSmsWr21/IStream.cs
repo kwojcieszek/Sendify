@@ -1,4 +1,4 @@
-﻿namespace Sendify.MessageManagerSmsDigiWr21;
+﻿namespace Sendify.MessageServiceSmsDigiWr21;
 
 public interface IStream
 {

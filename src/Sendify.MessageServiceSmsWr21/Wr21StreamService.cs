@@ -1,4 +1,4 @@
-﻿namespace Sendify.MessageManagerSmsDigiWr21;
+﻿namespace Sendify.MessageServiceSmsDigiWr21;
 
 internal class Wr21StreamService
 {
@@ -13,7 +13,6 @@ internal class Wr21StreamService
     {
         try
         {
-                        
             var buffer = new List<char>();
 
             while (true)
@@ -42,7 +41,7 @@ internal class Wr21StreamService
     public void WriteLine(string line)
     {
         try
-        {    
+        {
             _stream.Write(line + "\r\n");
         }
         catch (Exception e)
