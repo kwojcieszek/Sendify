@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sendify.Data\Sendify.Data.csproj" />
-    <ProjectReference Include="..\Sendify.MessageService\Sendify.MessageService.csproj" />
+    <ProjectReference Include="..\Sendify.MessagesService\Sendify.MessagesService.csproj" />
   </ItemGroup>
 
 </Project>

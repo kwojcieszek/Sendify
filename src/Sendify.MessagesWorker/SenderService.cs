@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sendify.Data;
 using Sendify.DataManager;
-using Sendify.MessageService;
+using Sendify.MessagesService;
 
 namespace Sendify.MessagesWorker;
 
@@ -9,9 +9,9 @@ public class SenderService
 {
     private int SendingAttempts { get; set; } = 5;
     private readonly ILogger<Worker> _logger;
-    private readonly IEnumerable<IMessageSender> _messageSender;
+    private readonly IEnumerable<IMessagesSender> _messageSender;
 
-    public SenderService(ILogger<Worker> logger, IEnumerable<IMessageSender> messageSender)
+    public SenderService(ILogger<Worker> logger, IEnumerable<IMessagesSender> messageSender)
     {
         _logger = logger;
         _messageSender = messageSender;
@@ -40,7 +40,7 @@ public class SenderService
         await Task.WhenAll(tasks);
     }
 
-    private async Task TasksManagement(MessageType messageType, IMessageSender messageSender,DataContext dataContext, CancellationToken cancellationToken)
+    private async Task TasksManagement(MessageType messageType, IMessagesSender messageSender,DataContext dataContext, CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {
@@ -57,7 +57,7 @@ public class SenderService
         }
     }
 
-    private async Task MessageProcessing(MessageType messageType, IMessageSender messageSender, DataContext dataContext)
+    private async Task MessageProcessing(MessageType messageType, IMessagesSender messageSender, DataContext dataContext)
     {
         
         var messages = await dataContext.Messages

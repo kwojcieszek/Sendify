@@ -1,15 +1,15 @@
 ﻿using Sendify.Data;
-using Sendify.MessageService;
+using Sendify.MessagesService;
 using Sendify.Shared.Extensions;
 
-namespace Sendify.MessageServiceSmsHttp;
+namespace Sendify.MessagesServiceSmsHttp;
 
-public class MessageSenderSmsHttp : IMessageSender
+public class MessagesSenderSmsHttp : IMessagesSender
 {
     private readonly string _apiUrl;
     public MessageType ServiceType => MessageType.Sms;
 
-    public MessageSenderSmsHttp(string apiUrl)
+    public MessagesSenderSmsHttp(string apiUrl)
     {
         _apiUrl = apiUrl ?? throw new ArgumentNullException(nameof(apiUrl));
     }

@@ -14,9 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Sendify.DataManager\Sendify.DataManager.csproj" />
     <ProjectReference Include="..\Sendify.Data\Sendify.Data.csproj" />
-    <ProjectReference Include="..\Sendify.MessageServiceEmailSmtp\Sendify.MessageServiceEmailSmtp.csproj" />
-    <ProjectReference Include="..\Sendify.MessageServiceSmsHttp\Sendify.MessageServiceSmsHttp.csproj" />
-    <ProjectReference Include="..\Sendify.MessageServiceSmsWr21\Sendify.MessageServiceSmsDigiWr21.csproj" />
+    <ProjectReference Include="..\Sendify.MessagesServiceEmailSmtp\Sendify.MessagesServiceEmailSmtp.csproj" />
+    <ProjectReference Include="..\Sendify.MessagesServiceSmsHttp\Sendify.MessagesServiceSmsHttp.csproj" />
+    <ProjectReference Include="..\Sendify.MessagesServiceSmsWr21\Sendify.MessagesServiceSmsDigiWr21.csproj" />
+    <ProjectReference Include="..\Sendify.MessagesService\Sendify.MessagesService.csproj" />
     <ProjectReference Include="..\Sendify.ServiceCollection\Sendify.ServiceCollection.csproj" />
     <ProjectReference Include="..\Sendify.Settings\Sendify.Settings.csproj" />
   </ItemGroup>

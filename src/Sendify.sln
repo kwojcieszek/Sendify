@@ -5,9 +5,9 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.Api", "Sendify.Api\Sendify.Api.csproj", "{C618D79A-4D69-48EC-A39D-5E1F437458CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessageService", "Sendify.MessageService\Sendify.MessageService.csproj", "{43EBE7D1-1CB9-477C-A6C9-FAB9A2E832DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessagesService", "Sendify.MessagesService\Sendify.MessagesService.csproj", "{43EBE7D1-1CB9-477C-A6C9-FAB9A2E832DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessageServiceSmsDigiWr21", "Sendify.MessageServiceSmsWr21\Sendify.MessageServiceSmsDigiWr21.csproj", "{0A5E5BB4-9875-4C50-BC07-40C7D529A0A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessagesServiceSmsDigiWr21", "Sendify.MessagesServiceSmsWr21\Sendify.MessagesServiceSmsDigiWr21.csproj", "{0A5E5BB4-9875-4C50-BC07-40C7D529A0A1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.Data", "Sendify.Data\Sendify.Data.csproj", "{1E1A398B-10A8-403E-9F77-AB18B93FD17D}"
 EndProject
@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.DataManager", "Send
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessagesWorker", "Sendify.MessagesWorker\Sendify.MessagesWorker.csproj", "{51083AE4-0133-4444-9807-008E3F364517}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessageServiceEmailSmtp", "Sendify.MessageServiceEmailSmtp\Sendify.MessageServiceEmailSmtp.csproj", "{3D98E79C-D4FF-47E6-84DF-C97C71205A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessagesServiceEmailSmtp", "Sendify.MessagesServiceEmailSmtp\Sendify.MessagesServiceEmailSmtp.csproj", "{3D98E79C-D4FF-47E6-84DF-C97C71205A26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.Shared", "Sendify.Shared\Sendify.Shared.csproj", "{FB0A5B1D-E1BB-450D-A8C1-33C2A5FE70DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.Settings", "Sendify.Settings\Sendify.Settings.csproj", "{83B089B4-079E-4832-8C34-5880E65E9F88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessageServiceSmsHttp", "Sendify.MessageServiceSmsHttp\Sendify.MessageServiceSmsHttp.csproj", "{33DDD41C-E282-4194-A50A-CBC62EA844DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.MessagesServiceSmsHttp", "Sendify.MessagesServiceSmsHttp\Sendify.MessagesServiceSmsHttp.csproj", "{33DDD41C-E282-4194-A50A-CBC62EA844DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sendify.JobsWorker", "Sendify.JobsWorker\Sendify.JobsWorker.csproj", "{1BC840D4-EBA3-404C-8A68-544EEB2721A5}"
 EndProject

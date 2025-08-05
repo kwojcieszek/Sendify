@@ -1,7 +1,6 @@
-﻿using Sendify.MessageService;
-using Sendify.MessageServiceSmsDigiWr21;
-using Sendify.MessageServiceEmailSmtp;
-using Sendify.MessageServiceSmsHttp;
+﻿using Sendify.MessagesService;
+using Sendify.MessagesServiceEmailSmtp;
+using Sendify.MessagesServiceSmsHttp;
 using Sendify.ServiceCollection.Extensions;
 
 namespace Sendify.MessagesWorker;
@@ -16,9 +15,9 @@ internal static class ServicesSettings
 
         //services.AddSingleton<IMessageSender, MessageSenderSmsDigiWr21>();
 
-        services.AddSingleton<IMessageSender, MessageSenderSmsHttp>(provider=> new MessageSenderSmsHttp("http://10.10.254.250"));
+        services.AddSingleton<IMessagesSender, MessagesSenderSmsHttp>(provider=> new MessagesSenderSmsHttp("http://10.10.254.250"));
 
-        services.AddSingleton<IMessageSender, MessageSenderEmailSmtp>();
+        services.AddSingleton<IMessagesSender, MessagesSenderEmailSmtp>();
 
         services.AddSingleton<SenderService>();
     }

@@ -1,4 +1,4 @@
-﻿namespace Sendify.MessageServiceSmsDigiWr21;
+﻿namespace Sendify.MessagesServiceSmsDigiWr21;
 
 internal class Wr21StreamService
 {

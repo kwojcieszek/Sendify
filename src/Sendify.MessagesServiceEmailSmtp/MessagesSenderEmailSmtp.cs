@@ -1,16 +1,16 @@
 ﻿using Microsoft.Extensions.Logging;
-using Sendify.MessageService;
 using Sendify.Data;
+using Sendify.MessagesService;
 
-namespace Sendify.MessageServiceEmailSmtp;
+namespace Sendify.MessagesServiceEmailSmtp;
 
-public class MessageSenderEmailSmtp : IMessageSender
+public class MessagesSenderEmailSmtp : IMessagesSender
 {
     private readonly ILogger _logger;
 
     public MessageType ServiceType => MessageType.Email;
 
-    public MessageSenderEmailSmtp()
+    public MessagesSenderEmailSmtp()
     {
         //  _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }

@@ -1,4 +1,4 @@
-﻿namespace Sendify.MessageService;
+﻿namespace Sendify.MessagesService;
 
 public class ResultMessage
 {

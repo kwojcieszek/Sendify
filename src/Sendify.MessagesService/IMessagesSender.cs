@@ -1,8 +1,8 @@
 ﻿using Sendify.Data;
 
-namespace Sendify.MessageService;
+namespace Sendify.MessagesService;
 
-public interface IMessageSender
+public interface IMessagesSender
 {
     public MessageType ServiceType { get; }
     public ResultMessage SendMessage(Message message);

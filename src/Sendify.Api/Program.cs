@@ -6,7 +6,7 @@ using MongoDB.Driver;
 using Sendify.Api.Extensions;
 using Sendify.Settings;
 using Sendify.ServiceCollection.Extensions;
-    
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.SetHostApplicationBuilder();
@@ -56,14 +56,12 @@ builder.Services.SetJwtSettings();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.DefaultModelsExpandDepth(-1);
-    });
-}
+    options.DefaultModelsExpandDepth(-1);
+});
 
 app.UseHttpsRedirection();
 
