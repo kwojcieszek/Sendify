@@ -43,9 +43,4 @@ public class DataContext : DbContext
 
         Database.AutoTransactionBehavior = AutoTransactionBehavior.Never;
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-    }
 }

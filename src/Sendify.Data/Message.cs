@@ -6,6 +6,8 @@ public class Message
 {
     [BsonId]
     public string Id { get; set; } = string.Empty;
+    public string UserId { get; set; } = string.Empty;
+    public string? GroupId { get; set; }
     public MessageType MessageType { get; set; }
     public string Sender { get; set; } = string.Empty;
     public ICollection<string>? Recipients { get; set; }

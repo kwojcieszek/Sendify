@@ -1,10 +1,15 @@
 using System.Text;
 using Asp.Versioning;
-using Sendify.Api.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-
+using MongoDB.Driver;
+using Sendify.Api.Extensions;
+using Sendify.Settings;
+using Sendify.ServiceCollection.Extensions;
+    
 var builder = WebApplication.CreateBuilder(args);
+
+builder.SetHostApplicationBuilder();
 
 builder.Services.AddControllers();
 
@@ -37,11 +42,17 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         RequireExpirationTime = false,
-        ValidAudience = builder.Configuration["JWT:ValidAudience"],
-        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
+        ValidAudience = Sendify.Settings.JwtSettings.Instance.JwtValidAudience,
+        ValidIssuer = Sendify.Settings.JwtSettings.Instance.JwtValidIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Sendify.Settings.JwtSettings.Instance.JwtSecret))
     };
 });
+
+builder.Services.SetDatabaseSettings();
+
+builder.Services.SetPasswordSettings();
+
+builder.Services.SetJwtSettings();
 
 var app = builder.Build();
 
@@ -59,7 +70,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseDatabase();
 
 app.Run();

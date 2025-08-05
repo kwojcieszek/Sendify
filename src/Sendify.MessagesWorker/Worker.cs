@@ -1,7 +1,3 @@
-using Sendify.MessageService;
-using Sendify.Data;
-using Sendify.DataManager;
-
 namespace Sendify.MessagesWorker;
 
 public class Worker : BackgroundService

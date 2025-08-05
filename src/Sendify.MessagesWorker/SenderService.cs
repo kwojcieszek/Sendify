@@ -8,8 +8,8 @@ namespace Sendify.MessagesWorker;
 public class SenderService
 {
     private int SendingAttempts { get; set; } = 5;
-    private ILogger<Worker> _logger;
-    private IEnumerable<IMessageSender> _messageSender;
+    private readonly ILogger<Worker> _logger;
+    private readonly IEnumerable<IMessageSender> _messageSender;
 
     public SenderService(ILogger<Worker> logger, IEnumerable<IMessageSender> messageSender)
     {
@@ -53,12 +53,13 @@ public class SenderService
                 _logger.LogError(ex, "Error processing messages of type {MessageType}: {Message}", messageType, ex.Message);
             }
 
-            await Task.Delay(500);
+            await Task.Delay(500, cancellationToken);
         }
     }
 
     private async Task MessageProcessing(MessageType messageType, IMessageSender messageSender, DataContext dataContext)
     {
+        
         var messages = await dataContext.Messages
                 .Where(t => t.MessageType == messageType &&
                 (t.SendingStatus == SendingStatus.None || (t.SendingStatus == SendingStatus.Failed && t.SendingAttempts < SendingAttempts)))

@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace Sendify.MessageServiceSmsDigiWr21;
+﻿namespace Sendify.MessageServiceSmsDigiWr21;
 
 public class Wr21Service
 {
@@ -58,9 +56,11 @@ public class Wr21Service
 
         startDate = DateTime.Now;
 
+        string line = string.Empty;
+
         while (true)
         {
-            var line = _streamService.ReadLineOrColonOrGreater();
+            line += _streamService.ReadLineOrColonOrGreater();
 
             if (line != null && line.Contains("SMS send success"))
             {

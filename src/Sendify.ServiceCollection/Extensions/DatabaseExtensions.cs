@@ -1,11 +1,12 @@
-﻿using Sendify.DataManager;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sendify.DataManager;
 using Sendify.Settings;
 
-namespace Sendify.MessagesWorker.Extensions;
+namespace Sendify.ServiceCollection.Extensions;
 
 public static class DatabaseExtensions
 {
-    public static void AddDatacontex(this IServiceCollection services)
+    public static void SetDatabaseSettings(this IServiceCollection services)
     {
         var databaseSettings = DatabaseSettings.Instance;
 
@@ -15,7 +16,5 @@ public static class DatabaseExtensions
         }
 
         DataContext.SetDefaultDatabaseSettings(databaseSettings.ConnectionString, databaseSettings.DatabaseName);
-
-        services.AddTransient<DataContext>();
     }
 }

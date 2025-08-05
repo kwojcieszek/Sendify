@@ -9,6 +9,7 @@ public class User
     public string? GroupId { get; set; } = null;
     public string UserName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
+    public bool IsHashed { get; set; }
     public PermissionLevel PermissionLevel { get; set; } = PermissionLevel.None;
     public string Email { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;

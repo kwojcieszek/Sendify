@@ -4,7 +4,7 @@ namespace Sendify.Settings;
 
 public static class IHostApplicationBuilderHelper
 {
-    public static IHostApplicationBuilder DefaultIHostApplicationBuilder { get; set; }
+    public static IHostApplicationBuilder? DefaultIHostApplicationBuilder { get; private set; }
 
     public static void SetHostApplicationBuilder(this IHostApplicationBuilder hostApplicationBuilder)
     {

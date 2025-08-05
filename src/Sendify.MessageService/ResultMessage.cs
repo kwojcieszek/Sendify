@@ -7,7 +7,6 @@ public class ResultMessage
 
     public ResultMessage()
     {
-
     }
 
     public ResultMessage(bool isSuccess, string errorMessage)

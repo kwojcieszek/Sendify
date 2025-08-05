@@ -4,19 +4,12 @@ namespace Sendify.Api.Extensions;
 
 public static class JwtExtensions
 {
-    public static IApplicationBuilder UseJwtSettings(this IApplicationBuilder app)
+    public static void SetJwtSettings(this IServiceCollection services)
     {
-        var configuration = app.ApplicationServices.GetService<IConfiguration>();
+        var jWTSettings = Settings.JwtSettings.Instance;
 
-        if (configuration == null)
-        {
-            throw new ArgumentNullException(nameof(configuration));
-        }
-
-        Authentication.JwtValidIssuer = configuration["JWT:ValidIssuer"]!;
-        Authentication.JwtValidAudience = configuration["JWT:ValidAudience"]!;
-        Authentication.JwtSecret = configuration["JWT:Secret"]!;
-
-        return app;
+        Authentication.JwtValidIssuer = jWTSettings.JwtValidIssuer;
+        Authentication.JwtValidAudience = jWTSettings.JwtValidAudience;
+        Authentication.JwtSecret = jWTSettings.JwtSecret;
     }
 }
