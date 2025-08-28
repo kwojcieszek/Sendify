@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/src/Sendify.Api/appsettings.json
+/src/Sendify.MessagesWorker/appsettings.json
+/src/Sendify.JobsWorker/appsettings.json
