@@ -15,6 +15,7 @@ public class Message
     public string Body { get; set; } = string.Empty;
     public ICollection<Attachment>? Attachments { get; set; } = null!;
     public bool IsSeparate { get; set; } = false;
+    public int? Priority { get; set; } = 5;
     public SendingStatus SendingStatus { get; set; } = SendingStatus.None;
     public int SendingAttempts { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;

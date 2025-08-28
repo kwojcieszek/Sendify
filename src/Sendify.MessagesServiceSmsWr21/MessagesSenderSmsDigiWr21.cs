@@ -6,14 +6,15 @@ namespace Sendify.MessagesServiceSmsDigiWr21;
 
 public class MessagesSenderSmsDigiWr21 : IMessagesSender
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<MessagesSenderSmsDigiWr21> _logger;
     private readonly Wr21Service _wr21Service;
     public MessageType ServiceType => MessageType.Sms;
+    public string Sender => string.Empty;
 
-    public MessagesSenderSmsDigiWr21()
+    public MessagesSenderSmsDigiWr21(ILogger<MessagesSenderSmsDigiWr21> logger, Wr21Service wr21Service)
     {
-        _wr21Service = new Wr21Service(new TerminalSerialPort("COM3"), string.Empty, string.Empty, false);
-        //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _wr21Service = wr21Service;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public ResultMessage SendMessage(Message message)

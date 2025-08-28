@@ -1,8 +1,11 @@
-﻿namespace Sendify.MessagesServiceSmsDigiWr21;
+﻿using Sendify.Shared.Extensions;
+
+namespace Sendify.MessagesServiceSmsDigiWr21;
 
 public class Wr21Service
 {
     private readonly Wr21StreamService _streamService;
+    private readonly SimplyLogger _logger = new SimplyLogger("ModemLogs");
     private readonly string _userName;
     private readonly string _password;
     private readonly bool _login;
@@ -39,8 +42,7 @@ public class Wr21Service
 
     private bool ExecuteSms(string phone, string message, bool login)
     {
-        int timeout = 5000;
-        DateTime startDate;
+        int timeout = 60_000;
 
         if (login)
         {
@@ -52,19 +54,31 @@ public class Wr21Service
             }
         }
 
-        _streamService.WriteLine($"sendsms {phone} \"{message}\"");
+        _streamService.WriteLine($"sendsms {phone} \"{message.RemoveDiacritics()}\"");
 
-        startDate = DateTime.Now;
+        var startDate = DateTime.Now;
 
-        string line = string.Empty;
+        var line = string.Empty;
 
         while (true)
         {
-            line += _streamService.ReadLineOrColonOrGreater();
+            var newline = _streamService.ReadLineOrColonOrGreater();
+
+            if(!string.IsNullOrEmpty(newline))
+            {
+                _logger.Log(newline);
+            }
+
+            line += newline;
 
             if (line != null && line.Contains("SMS send success"))
             {
                 return true;
+            }
+
+            if (line != null && (line.Contains("SMS send failure") || newline.RemoveLineEndings().Equals("ERROR")))
+            {
+                return false;
             }
 
             if ((DateTime.Now - startDate).TotalMilliseconds > timeout)

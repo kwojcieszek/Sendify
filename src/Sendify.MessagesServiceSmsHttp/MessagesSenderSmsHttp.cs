@@ -8,6 +8,7 @@ public class MessagesSenderSmsHttp : IMessagesSender
 {
     private readonly string _apiUrl;
     public MessageType ServiceType => MessageType.Sms;
+    public string Sender => string.Empty;
 
     public MessagesSenderSmsHttp(string apiUrl)
     {
@@ -21,12 +22,12 @@ public class MessagesSenderSmsHttp : IMessagesSender
 
     public async Task<ResultMessage> SendMessageAsync(Message message)
     {
-        if (message.Body == null || message.Body.Length == 0)
+        if (message.Body.Length == 0)
         {
             return new ResultMessage
             {
                 IsSuccess = false,
-                ErrorMessage = "Message body cannot be null or empty."
+                ErrorMessage = "Message body cannot be empty."
             };
         }
 
@@ -47,7 +48,7 @@ public class MessagesSenderSmsHttp : IMessagesSender
             {
                 var result = await SendMessage(recipient, msg);
 
-                if (recipient!= null && !result)
+                if (recipient != null && !result)
                 {
                     return new ResultMessage
                     {

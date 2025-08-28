@@ -54,6 +54,13 @@ builder.Services.SetPasswordSettings();
 
 builder.Services.SetJwtSettings();
 
+builder.Services.SetFilterExtensions();
+
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    options.Configure(context.Configuration.GetSection("Kestrel"));
+});
+
 var app = builder.Build();
 
 app.UseSwagger();

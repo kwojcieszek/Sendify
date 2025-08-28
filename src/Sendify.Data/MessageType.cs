@@ -2,6 +2,7 @@
 
 public enum MessageType
 {
-    Email = 0,
-    Sms = 1
+    None = 0,
+    Sms = 1,
+    Email = 2
 }

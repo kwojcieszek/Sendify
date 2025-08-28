@@ -7,7 +7,7 @@ public class TerminalTcp : IStream
     private readonly string _host;
     private readonly int _port;
     private TcpClient? _client;
-    public bool IsAvailable => _client != null && _client.Connected;
+    public bool IsAvailable => _client is { Connected: true };
 
     public TerminalTcp(string host, int port = 23)
     {
@@ -27,7 +27,7 @@ public class TerminalTcp : IStream
         var buffer = new byte[1];
         int bytesRead = stream.Read(buffer, 0, buffer.Length);
 
-        return bytesRead > 0 ? buffer[0] : -1; // Return -1 if no data is read
+        return bytesRead > 0 ? buffer[0] : -1;
     }
 
     public void Write(string text)

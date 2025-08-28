@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sendify.Data\Sendify.Data.csproj" />
     <ProjectReference Include="..\Sendify.MessagesService\Sendify.MessagesService.csproj" />
+    <ProjectReference Include="..\Sendify.Shared\Sendify.Shared.csproj" />
   </ItemGroup>
 
 </Project>

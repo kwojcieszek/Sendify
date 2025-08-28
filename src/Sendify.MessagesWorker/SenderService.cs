@@ -7,7 +7,8 @@ namespace Sendify.MessagesWorker;
 
 public class SenderService
 {
-    private int SendingAttempts { get; set; } = 5;
+    public int SendingAttempts { get; set; } = 5;
+    public int QueueLength { get; set; } = 5;
     private readonly ILogger<Worker> _logger;
     private readonly IEnumerable<IMessagesSender> _messageSender;
 
@@ -25,14 +26,19 @@ public class SenderService
 
         foreach (var messageType in messageTypes)
         {
-            var messageSender = _messageSender.FirstOrDefault(t => t.ServiceType == messageType);
+            if(messageType == MessageType.None)
+            {
+                continue;
+            }
 
-            if (messageSender == null)
+            var messageSenders = _messageSender.Where(t => t.ServiceType == messageType).ToArray();
+
+            if (messageSenders.Length == 0)
             {
                 throw new InvalidOperationException($"No message sender found for message type: {messageType}.");
             }
 
-            var task = TasksManagement(messageType, messageSender, new DataContext(), cancellationToken);
+            var task = TasksManagement(messageType, messageSenders, new DataContext(), cancellationToken);
 
             tasks.Add(task);
         }
@@ -40,13 +46,13 @@ public class SenderService
         await Task.WhenAll(tasks);
     }
 
-    private async Task TasksManagement(MessageType messageType, IMessagesSender messageSender,DataContext dataContext, CancellationToken cancellationToken)
+    private async Task TasksManagement(MessageType messageType, IMessagesSender[] messageSenders,DataContext dataContext, CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
-                await MessageProcessing(messageType, messageSender, dataContext);
+                await MessageProcessing(messageType, messageSenders, dataContext);
             }
             catch (Exception ex)
             {
@@ -57,14 +63,16 @@ public class SenderService
         }
     }
 
-    private async Task MessageProcessing(MessageType messageType, IMessagesSender messageSender, DataContext dataContext)
+    private async Task MessageProcessing(MessageType messageType, IMessagesSender[] messageSenders, DataContext dataContext)
     {
-        
         var messages = await dataContext.Messages
-                .Where(t => t.MessageType == messageType &&
-                (t.SendingStatus == SendingStatus.None || (t.SendingStatus == SendingStatus.Failed && t.SendingAttempts < SendingAttempts)))
-                .ToArrayAsync();
-
+            .Where(t => t.MessageType == messageType &&
+                        (t.SendingStatus == SendingStatus.None || (t.SendingStatus == SendingStatus.Failed && t.SendingAttempts < SendingAttempts)))
+            .OrderByDescending(t => t.Priority)
+            .ThenBy(t => t.CreatedAt)
+            .Take(QueueLength)
+            .ToArrayAsync();
+        
         foreach (var message in messages)
         {
             message.SendingAttempts++;
@@ -75,6 +83,9 @@ public class SenderService
 
         foreach (var message in messages)
         {
+            var messageSender = messageSenders.FirstOrDefault(m => m.Sender == message.Sender) ??
+                                messageSenders[new Random().Next(messageSenders.Length)];
+
             var result = await messageSender.SendMessageAsync(message);
 
             if (result.IsSuccess)

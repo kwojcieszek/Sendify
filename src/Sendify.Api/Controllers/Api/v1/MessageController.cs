@@ -6,7 +6,9 @@ using Sendify.Api.Extensions;
 using Sendify.Api.Models;
 using Sendify.Data;
 using Sendify.DataManager;
+using Sendify.FilterService;
 using Sendify.Shared;
+using Sendify.Shared.Extensions;
 
 namespace Sendify.Api.Controllers.Api.v1;
 
@@ -17,10 +19,12 @@ namespace Sendify.Api.Controllers.Api.v1;
 public class MessageController : ControllerBase
 {
     private readonly ILogger<MessageController> _logger;
+    private readonly IFilter _filter;
 
-    public MessageController(ILogger<MessageController> logger)
+    public MessageController(ILogger<MessageController> logger, IFilter filter)
     {
         _logger = logger;
+        _filter = filter;
     }
 
     [HttpGet("messages_by_user")]
@@ -93,20 +97,40 @@ public class MessageController : ControllerBase
                 return null;
             }
 
+            if(message.Attachments != null)
+            {
+                foreach(Attachment attachment in message.Attachments)
+                {
+                    attachment.Id = Guid.NewGuid().ToString();
+                }
+            }
+
             var validMessage = new Message
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = User.UserId()!,
                 GroupId = User.GroupId(),
-                Subject = message.Subject,
-                Body = message.Body,
+                Subject = message.Subject.JsonEscape(),
+                Body = message.Body.JsonEscape(),
                 Recipients = message.Recipients,
                 Sender = message.Sender,
                 MessageType = message.MessageType,
                 IsSeparate = message.IsSeparate,
                 Attachments = message.Attachments,
+                Priority = message.Priority ?? 5,
                 CreatedAt = DateTime.UtcNow
             };
+
+            var filterResult = _filter.IsMessageAllowed(validMessage);
+
+            if(!filterResult.IsAllowed)
+            {
+                Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
+                
+                await Response.WriteAsync(filterResult.Reason);
+
+                return null;
+            }
 
             await db.Messages.AddAsync(validMessage);
 

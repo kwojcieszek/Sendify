@@ -6,5 +6,5 @@ public enum PermissionLevel
     Admin = 1,
     SuperUser = 2,
     User = 3,
-    system = 4
+    System = 4
 }

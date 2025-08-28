@@ -11,4 +11,5 @@ public class MessageToSend
     public string Body { get; set; } = string.Empty;
     public ICollection<Attachment>? Attachments { get; set; }
     public bool IsSeparate { get; set; }
+    public int? Priority { get; set; }
 }

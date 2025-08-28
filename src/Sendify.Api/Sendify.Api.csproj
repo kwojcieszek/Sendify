@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sendify.DataManager\Sendify.DataManager.csproj" />
     <ProjectReference Include="..\Sendify.Data\Sendify.Data.csproj" />
+    <ProjectReference Include="..\Sendify.FilterService\Sendify.FilterService.csproj" />
     <ProjectReference Include="..\Sendify.ServiceCollection\Sendify.ServiceCollection.csproj" />
     <ProjectReference Include="..\Sendify.Settings\Sendify.Settings.csproj" />
     <ProjectReference Include="..\Sendify.Shared\Sendify.Shared.csproj" />

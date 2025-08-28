@@ -9,7 +9,7 @@ internal class Wr21StreamService
         _stream = stream;
     }
 
-    public string? ReadLineOrColonOrGreater()
+    public string ReadLineOrColonOrGreater()
     {
         try
         {

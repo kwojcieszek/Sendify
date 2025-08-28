@@ -5,7 +5,7 @@ namespace Sendify.Shared.Extensions;
 
 public static class StringExtensions
 {
-    public static object Parse(this string s,Type type)
+    public static object Parse(this string s, Type type)
     {
         return TypeDescriptor.GetConverter(type).ConvertFromInvariantString(s);
     }
@@ -31,6 +31,24 @@ public static class StringExtensions
         }
 
         return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+    }
+
+    public static string JsonEscape(this string s)
+    {
+        if (string.IsNullOrEmpty(s))
+        {
+            return s;
+        }
+
+        return s
+                .Replace("\n", "\\n")
+                .Replace("\r", "\\r")
+                .Replace("\t", "\\t");
+    }
+
+    public static string RemoveLineEndings(this string s)
+    {
+        return s.Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
     }
 
     public static string[] SplitByLength(this string s, int length)
