@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-
-namespace Sendify.Data;
+﻿namespace Sendify.Api.Models;
 
 public class AttachmentModel
 {
