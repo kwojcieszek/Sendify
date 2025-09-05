@@ -1,7 +1,7 @@
 using Asp.Versioning;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Sendify.Api.Common;
 using Sendify.Api.Extensions;
 using Sendify.Api.Models;
 using Sendify.Data;
@@ -15,22 +15,22 @@ namespace Sendify.Api.Controllers.Api.v1;
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-[Authorize]
-public class MessageController : ControllerBase
+[ApiAuthorize]
+public class MessagesController : ControllerBase
 {
-    private readonly ILogger<MessageController> _logger;
+    private readonly ILogger<MessagesController> _logger;
     private readonly IFilter _filter;
 
-    public MessageController(ILogger<MessageController> logger, IFilter filter)
+    public MessagesController(ILogger<MessagesController> logger, IFilter filter)
     {
         _logger = logger;
         _filter = filter;
     }
 
-    [HttpGet("messages_by_user")]
-    public async Task<IEnumerable<Message>> GetByUser()
+    [HttpGet()]
+    public async Task<IEnumerable<Message>> GetMessages()
     {
-        if (User.UserId() == null)
+        if (string.IsNullOrEmpty(User.UserId()))
         {
             Response.StatusCode = (int)HttpStatusCode.NonAuthoritativeInformation;
 
@@ -44,25 +44,8 @@ public class MessageController : ControllerBase
             .ToListAsync();
     }
 
-    [HttpGet("messages_by_group")]
-    public async Task<IEnumerable<Message>> GetByGroup()
-    {
-        if (User.GroupId() == null)
-        {
-            Response.StatusCode = (int)HttpStatusCode.NonAuthoritativeInformation;
-
-            return [];
-        }
-
-        var db = new DataContext();
-
-        return await db.Messages
-            .Where(m => m.GroupId == User.GroupId())
-            .ToListAsync();
-    }
-
     [HttpGet("{id}")]
-    public async Task<Message?> GetById(string id)
+    public async Task<Message?> GetMessageById(string id)
     {
         if (User.UserId() == null)
         {
@@ -78,11 +61,9 @@ public class MessageController : ControllerBase
             .FirstOrDefaultAsync();
     }
 
-    [HttpPost]
-    public async Task<ReplyMessage?> Post(MessageToSend message)
+    [HttpPost()]
+    public async Task<ReplyMessageModel?> PostSendMessage(MessageToSendModel message)
     {
-        var db = new DataContext();
-
         try
         {
             if(User.UserId() == null)
@@ -132,11 +113,13 @@ public class MessageController : ControllerBase
                 return null;
             }
 
+            var db = new DataContext();
+
             await db.Messages.AddAsync(validMessage);
 
             await db.SaveChangesAsync();
 
-            return new ReplyMessage()
+            return new ReplyMessageModel()
             {
                 Id = validMessage.Id,
                 CreatedAt = validMessage.CreatedAt

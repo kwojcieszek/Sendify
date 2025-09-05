@@ -14,7 +14,8 @@ public class DataContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Pattern> Patterns { get; set; }
-    
+    public DbSet<Token> Tokens { get; set; }
+
     public static void SetDefaultDatabaseSettings(string defaultConnectionstring, string defaultDatabaseName)
     {
         _defaultDatabaseName = defaultDatabaseName;

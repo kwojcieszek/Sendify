@@ -2,7 +2,7 @@
 
 namespace Sendify.Api.Models;
 
-public class MessageToSend
+public class MessageToSendModel
 {
     public MessageType MessageType { get; set; }
     public string Sender { get; set; } = string.Empty;

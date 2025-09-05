@@ -7,7 +7,6 @@ using Sendify.Api.Extensions;
 using Sendify.Api.Models;
 using Sendify.Data;
 using Sendify.DataManager;
-using Sendify.Shared;
 
 namespace Sendify.Api.Controllers.Api.v1;
 
@@ -16,23 +15,25 @@ namespace Sendify.Api.Controllers.Api.v1;
 public class AuthenticateController : ControllerBase
 {
     private readonly IConfiguration _configuration;
+    private readonly IAuthentication _authentication;
 
-    public AuthenticateController(IConfiguration configuration)
+    public AuthenticateController(IConfiguration configuration, IAuthentication authentication)
     {
         _configuration = configuration;
+        _authentication = authentication;
     }
 
     [HttpPost(template: "login")]
     public Task<IActionResult> PostLogin([FromBody] LoginModel model)
     {
-        var authentication = new Authentication(new PasswordSha256());
+        var securityToken = _authentication.Auth(model.UserName, model.Password);
 
-        if (authentication.Auth(model.UserName, model.Password))
+        if (securityToken != null)
         {
             return Task.FromResult<IActionResult>(Ok(new
             {
-                token = new JwtSecurityTokenHandler().WriteToken(authentication.SecurityToken),
-                expiration = authentication.SecurityToken.ValidTo
+                token = new JwtSecurityTokenHandler().WriteToken(securityToken),
+                expiration = securityToken.ValidTo
             }));
         }
 

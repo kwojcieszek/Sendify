@@ -2,21 +2,30 @@ using System.Text;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Driver;
 using Sendify.Api.Extensions;
 using Sendify.Settings;
 using Sendify.ServiceCollection.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Sendify.Api.Common;
+using Sendify.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.SetHostApplicationBuilder();
 
+builder.Services.SetDatabaseSettings();
+
+builder.Services.SetPasswordSettings();
+
+builder.Services.SetFilterExtensions();
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 builder.Services.AddApiVersioning(o =>
 {
@@ -48,13 +57,23 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.SetDatabaseSettings();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiTokenPolicy", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.Requirements.Add(new ApiTokenRequirement());
+    });
+});
 
-builder.Services.SetPasswordSettings();
+builder.Services.AddSingleton<ITokensService, ApiTokensService>(p => new ApiTokensService(Sendify.Settings.JwtSettings.Instance.JwtValidIssuer,
+        Sendify.Settings.JwtSettings.Instance.JwtValidAudience, Sendify.Settings.JwtSettings.Instance.JwtSecret));
 
-builder.Services.SetJwtSettings();
+builder.Services.AddSingleton<IAuthorizationHandler, ApiAuthorizationHandler>();
 
-builder.Services.SetFilterExtensions();
+builder.Services.AddSingleton<IPasswordService, PasswordSha256>();
+
+builder.Services.AddSingleton<IAuthentication, ApiAuthentication>();
 
 builder.WebHost.ConfigureKestrel((context, options) =>
 {
