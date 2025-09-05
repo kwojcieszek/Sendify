@@ -78,13 +78,7 @@ public class MessagesController : ControllerBase
                 return null;
             }
 
-            if(message.Attachments != null)
-            {
-                foreach(Attachment attachment in message.Attachments)
-                {
-                    attachment.Id = Guid.NewGuid().ToString();
-                }
-            }
+            var attachments = message?.Attachments?.Select(a => new Attachment { Id = Guid.NewGuid().ToString(), FileName = a.FileName, ContentType = a.ContentType, Content = a.Content }).ToArray();
 
             var validMessage = new Message
             {
@@ -97,8 +91,8 @@ public class MessagesController : ControllerBase
                 Sender = message.Sender,
                 MessageType = message.MessageType,
                 IsSeparate = message.IsSeparate,
-                Attachments = message.Attachments,
-                Priority = message.Priority ?? 5,
+                Attachments = attachments,
+                Priority = message?.Priority ?? 5,
                 CreatedAt = DateTime.UtcNow
             };
 
