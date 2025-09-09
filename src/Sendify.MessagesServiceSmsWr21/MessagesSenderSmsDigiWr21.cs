@@ -13,8 +13,8 @@ public class MessagesSenderSmsDigiWr21 : IMessagesSender
 
     public MessagesSenderSmsDigiWr21(ILogger<MessagesSenderSmsDigiWr21> logger, Wr21Service wr21Service)
     {
-        _wr21Service = wr21Service;
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _wr21Service = wr21Service ?? throw new ArgumentNullException(nameof(wr21Service)); ;
     }
 
     public ResultMessage SendMessage(Message message)

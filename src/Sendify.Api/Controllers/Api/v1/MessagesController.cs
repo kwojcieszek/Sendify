@@ -72,13 +72,13 @@ public class MessagesController : ControllerBase
                 return null;
             }
 
-            if (string.IsNullOrEmpty(message.Body) || message.Recipients == null || !message.Recipients.Any())
+            if (message == null || string.IsNullOrEmpty(message.Body) || message.Recipients == null || !message.Recipients.Any())
             {
                 Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
                 return null;
             }
 
-            var attachments = message?.Attachments?.Select(a => new Attachment { Id = Guid.NewGuid().ToString(), FileName = a.FileName, ContentType = a.ContentType, Content = a.Content }).ToArray();
+            var attachments = message.Attachments?.Select(a => new Attachment { Id = Guid.NewGuid().ToString(), FileName = a.FileName, ContentType = a.ContentType, Content = a.Content }).ToArray();
 
             var validMessage = new Message
             {

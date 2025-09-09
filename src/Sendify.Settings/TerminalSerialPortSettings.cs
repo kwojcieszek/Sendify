@@ -9,9 +9,9 @@ public class TerminalSerialPortSettings
 
     private TerminalSerialPortSettings()
     {
-        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder!);
+        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultHostApplicationBuilder!);
         
-        var configuration = IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder.Configuration;
+        var configuration = IHostApplicationBuilderHelper.DefaultHostApplicationBuilder.Configuration;
 
         PortName = configuration["TerminalSerialPort:PortName"]!;
     }

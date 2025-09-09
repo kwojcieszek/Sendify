@@ -14,7 +14,9 @@ internal static class ServicesSettings
         services.AddSingleton<Wr21Service>(provider => new Wr21Service(new TerminalSerialPort(Settings.TerminalSerialPortSettings.Instance.PortName), string.Empty, string.Empty, false));
         
         services.AddSingleton<IMessagesSender, MessagesSenderSmsDigiWr21>();
-        
+
+        services.AddSingleton<SenderService>();
+
         Settings.SmtpSettings.Instance.SmtpClientList.ForEach(smtpClientData =>
             {
                 services.AddSingleton<IMessagesSender>(sp=>
@@ -30,7 +32,5 @@ internal static class ServicesSettings
                 );
             }
         );
-
-        services.AddSingleton<SenderService>();
     }
 }

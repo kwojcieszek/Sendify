@@ -11,9 +11,9 @@ public class JwtSettings
 
     private JwtSettings()
     {
-        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder!);
+        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultHostApplicationBuilder!);
         
-        var configuration = IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder.Configuration;
+        var configuration = IHostApplicationBuilderHelper.DefaultHostApplicationBuilder.Configuration;
         
         JwtValidIssuer = configuration["JWT:ValidIssuer"]!;
         JwtValidAudience = configuration["JWT:ValidAudience"]!;

@@ -3,5 +3,5 @@
 public interface IPasswordService
 {
     public string HashPassword(string password);
-    public bool ComparePassword(string password, string hashPassword);
+    public bool ComparePassword(string password, string passwordHash);
 }

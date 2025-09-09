@@ -13,9 +13,9 @@ public class ApiAuthorizationHandler : AuthorizationHandler<ApiTokenRequirement>
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ApiTokenRequirement requirement)
     {
-        if (context.Resource is DefaultHttpContext r)
+        if (context.Resource is DefaultHttpContext resource)
         {
-            if(r.Request.Headers.TryGetValue("Authorization", out var authHeader))
+            if(resource.Request.Headers.TryGetValue("Authorization", out var authHeader))
             {
                 var token = authHeader.ToString().Replace("Bearer ", string.Empty);
 

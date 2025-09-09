@@ -1,4 +1,4 @@
-﻿namespace Sendify.Data;
+﻿namespace Sendify.Api.Models;
 
 public class NewTokenModel
 {

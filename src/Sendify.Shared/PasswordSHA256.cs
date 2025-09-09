@@ -16,8 +16,8 @@ public class PasswordSha256 : IPasswordService
             numBytesRequested: 256 / 8));
     }
 
-    public bool ComparePassword(string password, string hashPassword)
+    public bool ComparePassword(string password, string passwordHash)
     {
-        return HashPassword(password) == hashPassword;
+        return HashPassword(password) == passwordHash;
     }
 }

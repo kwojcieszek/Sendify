@@ -10,9 +10,9 @@ public class SmtpSettings
 
     private SmtpSettings()
     {
-        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder!);
+        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultHostApplicationBuilder!);
 
-        var configuration = IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder.Configuration;
+        var configuration = IHostApplicationBuilderHelper.DefaultHostApplicationBuilder.Configuration;
 
         SmtpClientList = configuration.GetSection("SmtpSettings").Get<List<SmtpClient>>()!;
     }

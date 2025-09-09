@@ -11,9 +11,9 @@ public class DatabaseSettings
 
     private DatabaseSettings()
     {
-        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder!);
+        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultHostApplicationBuilder!);
         
-        var configuration = IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder.Configuration;
+        var configuration = IHostApplicationBuilderHelper.DefaultHostApplicationBuilder.Configuration;
 
         ConnectionString = configuration.GetValue<string>("Database:ConnectionStrings", string.Empty);
         DatabaseName = configuration.GetValue<string>("Database:DatabaseName", string.Empty);

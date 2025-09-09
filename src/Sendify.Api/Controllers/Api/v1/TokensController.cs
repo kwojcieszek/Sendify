@@ -7,6 +7,7 @@ using Sendify.Data;
 using Sendify.DataManager;
 using Sendify.Shared;
 using System.IdentityModel.Tokens.Jwt;
+using Sendify.Api.Models;
 
 namespace Sendify.Api.Controllers.Api.v1;
 

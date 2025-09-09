@@ -9,9 +9,9 @@ public class PasswordSettings
 
     private PasswordSettings()
     {
-        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder!);
+        ThrowHelper.ThrowIfNull(IHostApplicationBuilderHelper.DefaultHostApplicationBuilder!);
         
-        var configuration = IHostApplicationBuilderHelper.DefaultIHostApplicationBuilder.Configuration;
+        var configuration = IHostApplicationBuilderHelper.DefaultHostApplicationBuilder.Configuration;
         
         Salt = configuration["Password:Salt"]!;
     }
