@@ -1,8 +1,8 @@
 # Sendify
 
 Sendify is a lightweight messaging API and client suite for sending SMS/email messages via a hosted Sendify service. This repository contains:
-- A minimal Python client (`sendify_client/sendify_client.py`) compatible with Python 3.10+.
 - A .NET 8 API surface and supporting services.
+- A minimal Python client (`sendify_client/sendify_client.py`) compatible with Python 3.10+.
 - Documentation, contributing guidelines, and an MIT license.
 
 Quick, focused, and production-minded — suitable for scripts, background workers, and service integrations.
@@ -13,9 +13,9 @@ Quick, focused, and production-minded — suitable for scripts, background worke
 - Clear defaults for development and production use.
 
 ## Requirements
+- .NET 8 SDK for building and running the .NET projects.
 - Python 3.10+ and `requests` (for the Python client).
   - Install: `pip install requests`
-- .NET 8 SDK for building and running the .NET projects.
 
 ## Quickstart — Python client
 1. Install dependency:
