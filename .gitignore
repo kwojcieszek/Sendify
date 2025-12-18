@@ -419,3 +419,6 @@ FodyWeavers.xsd
 /src/Sendify.Api/appsettings.json
 /src/Sendify.MessagesWorker/appsettings.json
 /src/Sendify.JobsWorker/appsettings.json
+/src/Sendify.Api/appsettings_local.json
+/src/Sendify.JobsWorker/appsettings_local.json
+/src/Sendify.MessagesWorker/appsettings_local.json
