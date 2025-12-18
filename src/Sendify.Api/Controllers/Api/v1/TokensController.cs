@@ -36,7 +36,7 @@ public class TokensController : ControllerBase
             return [];
         }
 
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         return await db.Tokens
             .Where(m => m.UserId == User.UserId())
@@ -46,7 +46,7 @@ public class TokensController : ControllerBase
     [HttpPost()]
     public async Task<IActionResult> PostCreateNewToken(NewTokenModel newToken)
     {
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         var user = db.Users.FirstOrDefault(u => u.Id == User.UserId());
 
@@ -76,7 +76,7 @@ public class TokensController : ControllerBase
             return null;
         }
 
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         return await db.Tokens
             .Where(t => t.UserId == User.UserId() && t.Id == id)

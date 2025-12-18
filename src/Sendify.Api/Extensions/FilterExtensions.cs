@@ -7,7 +7,7 @@ public static class FilterExtensions
 {
     public static void SetFilterExtensions(this IServiceCollection services)
     {
-        var db = new DataContext();
+        using var db = new DataContext();
 
         var filterMessages = db.Patterns.ToArray();
 

@@ -38,7 +38,9 @@ public class SenderService
                 throw new InvalidOperationException($"No message sender found for message type: {messageType}.");
             }
 
-            var task = TasksManagement(messageType, messageSenders, new DataContext(), cancellationToken);
+            await using var db = new DataContext();
+
+            var task = TasksManagement(messageType, messageSenders, db, cancellationToken);
 
             tasks.Add(task);
         }

@@ -32,7 +32,7 @@ public class GroupMessagesController : ControllerBase
             return [];
         }
 
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         return await db.Messages
             .Where(m => m.GroupId == User.GroupId())

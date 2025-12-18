@@ -80,7 +80,7 @@ public class ApiTokensService : ITokensService
 
     public async Task AddSecurityTokenToDatabase(JwtSecurityToken jwtSecurityToken, User user, string? tokenName = null, string? description = null)
     {
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         var securityTokenString = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
@@ -102,7 +102,7 @@ public class ApiTokensService : ITokensService
     
     public async Task RevokeToken(string id,string userId)
     {
-       var db = new DataContext();
+       await using var db = new DataContext();
 
         var token = db.Tokens.FirstOrDefault(t => t.UserId == userId && t.Id == id);
 
@@ -134,7 +134,8 @@ public class ApiTokensService : ITokensService
     {
         if (_tokensUpdated == null || (DateTime.UtcNow - _tokensUpdated.Value).TotalSeconds > _tokensUpdateIntervalSeconds)
         {
-            var db = new DataContext();
+            using var db = new DataContext();
+
             List<string>? revokedTokens;
             
             if (_tokensUpdated == null)

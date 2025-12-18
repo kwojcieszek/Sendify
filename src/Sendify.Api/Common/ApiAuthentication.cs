@@ -18,7 +18,7 @@ public class ApiAuthentication : IAuthentication
 
     public JwtSecurityToken? Auth(string userName, string password, int expiresMinutes = 480)
     {
-        var db = new DataContext();
+        using var db = new DataContext();
         
         var user = db.Users.FirstOrDefault(u => u.UserName == userName);
 

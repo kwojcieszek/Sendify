@@ -37,7 +37,7 @@ public class MessagesController : ControllerBase
             return [];
         }
 
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         return await db.Messages
             .Where(m=>m.UserId == User.UserId())
@@ -54,7 +54,7 @@ public class MessagesController : ControllerBase
             return null;
         }
 
-        var db = new DataContext();
+        await using var db = new DataContext();
 
         return await db.Messages
             .Where(m => m.UserId == User.UserId() && m.Id == id)
@@ -107,7 +107,7 @@ public class MessagesController : ControllerBase
                 return null;
             }
 
-            var db = new DataContext();
+            await using var db = new DataContext();
 
             await db.Messages.AddAsync(validMessage);
 

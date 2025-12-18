@@ -44,7 +44,8 @@ public class AuthenticateController : ControllerBase
     [HttpGet(template: "user")]
     public async Task<User?> GetUser()
     {
-        var db = new DataContext();
+        await using var db = new DataContext();
+
         return await db.Users.FirstOrDefaultAsync(u => u.Id == User.UserId());
     }
 }
