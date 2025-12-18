@@ -11,6 +11,10 @@ using Sendify.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings_local.json", optional: true, reloadOnChange: true);
+
 builder.SetHostApplicationBuilder();
 
 builder.Services.SetDatabaseSettings();
