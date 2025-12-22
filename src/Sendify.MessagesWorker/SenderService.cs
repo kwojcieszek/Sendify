@@ -38,7 +38,7 @@ public class SenderService
                 throw new InvalidOperationException($"No message sender found for message type: {messageType}.");
             }
 
-            await using var db = new DataContext();
+            var db = new DataContext();
 
             var task = TasksManagement(messageType, messageSenders, db, cancellationToken);
 

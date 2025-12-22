@@ -23,7 +23,7 @@ public class MessagesSenderEmailSmtp : IMessagesSender
 
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        _smtpSender = CreateSmtpSenders(host,sender,port,enableSsl,userName,password);
+        _smtpSender = CreateSmtpSenders(host, sender, port, enableSsl, userName, password);
     }
 
     public ResultMessage SendMessage(Message message)
@@ -33,7 +33,7 @@ public class MessagesSenderEmailSmtp : IMessagesSender
 
     public async Task<ResultMessage> SendMessageAsync(Message message)
     {
-        if(message.Recipients == null)
+        if (message.Recipients == null)
         {
             return new ResultMessage(false, "No recipients specified");
         }
@@ -57,20 +57,29 @@ public class MessagesSenderEmailSmtp : IMessagesSender
                 Data = new MemoryStream(bytes)
             });
         }
-        
-        var email = Email
-            .From(message.Sender)
-            .To(message.Recipients.Select(r => new Address(r)))
-            .Subject(message.Subject)
-            .Attach(attachments)
-            .Body(message.Body);
-        
-        var result = await _smtpSender.SendAsync(email);
 
-        return new ResultMessage(result.Successful, string.Join("\n", result.ErrorMessages));
+        SendResponse? result = null;
+
+        if (message.IsSeparate)
+        {
+            foreach (var messageRecipient in message.Recipients)
+            { 
+                var email = Email.From(message.Sender).To([new Address(messageRecipient)]).Subject(message.Subject).Attach(attachments).Body(message.Body);
+
+                result = await _smtpSender.SendAsync(email);
+            }
+        }
+        else
+        {
+            var email = Email.From(message.Sender).To(message.Recipients.Select(r => new Address(r))).Subject(message.Subject).Attach(attachments).Body(message.Body);
+
+            result = await _smtpSender.SendAsync(email);
+        }
+
+        return new ResultMessage(result!.Successful, string.Join("\n", result!.ErrorMessages));
     }
 
-    private SmtpSender CreateSmtpSenders(string host, string sender, int port,bool enableSsl, string userName, string password)
+    private SmtpSender CreateSmtpSenders(string host, string sender, int port, bool enableSsl, string userName, string password)
     {
         var smtpSender = new SmtpSender(() => new SmtpClient(host)
         {

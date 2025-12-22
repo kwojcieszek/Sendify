@@ -6,13 +6,6 @@ POST {host}/api/v1/messages
 Content-Type: application/json
 Authorization: Bearer <token>
 
-Example payload:
-{
-  "MessageType": 1,
-  "Recipients": ["48602174021"],
-  "Priority": 9,
-  "Body": "Test ..."
-}
 """
 
 from __future__ import annotations
@@ -20,6 +13,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 import time
+import base64
+from pathlib import Path
+import mimetypes
 
 try:
     import requests
@@ -40,6 +36,61 @@ class SendifyConfig:
     retries: int = 2  # number of retry attempts on transient failures
     backoff_seconds: float = 0.6  # base backoff between retries
     verify_ssl: bool = False  # whether to verify SSL certificates
+
+
+@dataclass(frozen=True)
+class Attachment:
+    """
+    Represents a single attachment to be sent with the message.
+
+    Content is base64-encoded binary. Use `Attachment.from_file(path, ...)`
+    to create an attachment from disk.
+    """
+    file_name: str
+    content_type: str
+    content: str
+
+    def to_api_dict(self) -> JsonDict:
+        return {
+            "FileName": self.file_name,
+            "ContentType": self.content_type,
+            "Content": self.content,
+        }
+
+    @classmethod
+    def from_file(
+        cls,
+        path: str,
+        *,
+        file_name: Optional[str] = None,
+        content_type: Optional[str] = None,
+        encoding: str = "base64",
+    ) -> "Attachment":
+        """
+        Create Attachment by reading `path` from disk and encoding its bytes.
+
+        - `path`: filesystem path to the file.
+        - `file_name`: optional name to send to API (defaults to the file's basename).
+        - `content_type`: optional MIME type (guessed if not provided).
+        - `encoding`: currently supports "base64" (default).
+        """
+        p = Path(path)
+        if not p.exists():
+            raise FileNotFoundError(f"Attachment file not found: {path}")
+        if not p.is_file():
+            raise IsADirectoryError(f"Attachment path is not a file: {path}")
+
+        raw = p.read_bytes()
+
+        if encoding.lower() != "base64":
+            raise ValueError(f"Unsupported encoding: {encoding}")
+
+        b64 = base64.b64encode(raw).decode("ascii")
+
+        name = file_name or p.name
+        ctype = content_type or mimetypes.guess_type(name)[0] or "application/octet-stream"
+
+        return cls(file_name=name, content_type=ctype, content=b64)
 
 
 class SendifyError(Exception):
@@ -81,8 +132,12 @@ class SendifyClient:
         self,
         *,
         message_type: int,
+        sender: Optional[str],
         recipients: List[str],
         body: str,
+        subject: Optional[str] = None,
+        attachments: Optional[List[Attachment]] = None,
+        is_separate: Optional[bool] = None,
         priority: int = 9,
         sending_status: int = 1,
         extra_fields: Optional[JsonDict] = None,
@@ -91,13 +146,37 @@ class SendifyClient:
         Convenience wrapper to build the JSON payload.
 
         Returns parsed JSON response (dict) if possible, otherwise {"status_code": ..., "text": ...}.
+        - `attachments` is a list of Attachment instances. Attachment.content is expected
+          to be a string (commonly base64).
+        - `subject` and `is_separate` map to "Subject" and "IsSeparate" in the API.
         """
         payload: JsonDict = {
             "MessageType": message_type,
+            "Sender": sender,
             "Recipients": recipients,
             "Priority": priority,
-            "Body": body
+            "Body": body,
+            "IsSeparate": bool(is_separate)
         }
+
+        if sender is None:
+            sender = ""
+
+        if sender is not None:
+            payload["Sender"] = sender
+
+        if subject is not None:
+            payload["Subject"] = subject
+
+        if attachments:
+            payload["Attachments"] = [a.to_api_dict() for a in attachments]
+
+        if is_separate is not None:
+            payload["IsSeparate"] = bool(is_separate)
+
+        if sending_status is not None:
+            payload["SendingStatus"] = sending_status
+
         if extra_fields:
             payload.update(extra_fields)
 
