@@ -1,7 +1,14 @@
-namespace SendifyClientNet;
-
-public class SendifyResult(bool result, int code)
+namespace SendifyClientNet
 {
-    public bool Result { get; set; } = result;
-    public int Code { get; set; } = code;
+    public class SendifyResult
+    {
+        public bool Result { get; set; }
+        public int Code { get; set; }
+
+        public SendifyResult(bool result, int code)
+        {
+            Result = result;
+            Code = code;
+        }
+    }
 }

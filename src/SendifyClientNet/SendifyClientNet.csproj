@@ -1,10 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>7.3</LangVersion>
+
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<OutputType>Exe</OutputType>
+
+		<PackageId>SendifyClientNet</PackageId>
+		<Version>2.0.1</Version>
+		<Authors>Kamil Wojcieszek</Authors>
+		<Description>SendifyClientNet is a lightweight .NET Standard 2.0 client library that provides an async, retry-capable API for sending SMS and email via a Sendify HTTP service.</Description>
+		<PackageTags>sendify;sms;email;http;client</PackageTags>
+		<RepositoryUrl>https://github.com/kwojcieszek/Sendify</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		
+	</PropertyGroup>
 
 </Project>

@@ -1,37 +1,40 @@
-namespace SendifyClientNet;
+using System;
 
-public class SendifyException : Exception
+namespace SendifyClientNet
 {
-    public SendifyException()
+    public class SendifyException : Exception
     {
+        public SendifyException()
+        {
+        }
+
+        public SendifyException(string message)
+            : base(message)
+        {
+        }
+
+        public SendifyException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
     }
 
-    public SendifyException(string? message)
-        : base(message)
+    public sealed class SendifyHttpException : SendifyException
     {
+        public int StatusCode { get; }
+
+        public SendifyHttpException(int statusCode, string message)
+            : base(message)
+        {
+            StatusCode = statusCode;
+        }
     }
 
-    public SendifyException(string? message, Exception? inner)
-        : base(message, inner)
+    public sealed class SendifyRequestException : SendifyException
     {
-    }
-}
-
-public sealed class SendifyHttpException : SendifyException
-{
-    public int StatusCode { get; }
-
-    public SendifyHttpException(int statusCode, string message)
-        : base(message)
-    {
-        StatusCode = statusCode;
-    }
-}
-
-public sealed class SendifyRequestException : SendifyException
-{
-    public SendifyRequestException(string? message, Exception? inner = null)
-        : base(message, inner)
-    {
+        public SendifyRequestException(string message, Exception inner = null)
+            : base(message, inner)
+        {
+        }
     }
 }
