@@ -10,7 +10,7 @@ public static class StringExtensions
         return TypeDescriptor.GetConverter(type).ConvertFromInvariantString(s);
     }
 
-    public static string RemoveDiacritics(this string s)
+    public static string NormalizeText(this string s)
     {
         if (string.IsNullOrEmpty(s))
         {
@@ -31,6 +31,23 @@ public static class StringExtensions
         }
 
         return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+    }
+
+    public static string ReplacePolishDiacritics(this string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return s;
+
+        return s
+            .Replace('ą', 'a').Replace('Ą', 'A')
+            .Replace('ć', 'c').Replace('Ć', 'C')
+            .Replace('ę', 'e').Replace('Ę', 'E')
+            .Replace('ł', 'l').Replace('Ł', 'L')
+            .Replace('ń', 'n').Replace('Ń', 'N')
+            .Replace('ó', 'o').Replace('Ó', 'O')
+            .Replace('ś', 's').Replace('Ś', 'S')
+            .Replace('ż', 'z').Replace('Ż', 'Z')
+            .Replace('ź', 'z').Replace('Ź', 'Z');
     }
 
     public static string JsonEscape(this string s)

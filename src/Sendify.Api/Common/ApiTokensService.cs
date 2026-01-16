@@ -99,10 +99,10 @@ public class ApiTokensService : ITokensService
 
         await db.SaveChangesAsync();
     }
-    
-    public async Task RevokeToken(string id,string userId)
+
+    public async Task RevokeToken(string id, string userId)
     {
-       await using var db = new DataContext();
+        await using var db = new DataContext();
 
         var token = db.Tokens.FirstOrDefault(t => t.UserId == userId && t.Id == id);
 
@@ -137,7 +137,7 @@ public class ApiTokensService : ITokensService
             using var db = new DataContext();
 
             List<string>? revokedTokens;
-            
+
             if (_tokensUpdated == null)
             {
                 _tokensUpdated = DateTime.UtcNow;

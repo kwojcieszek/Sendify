@@ -39,6 +39,7 @@ namespace SendifyClientNet
             }
 
             string baseUrl = NormalizeHost(_config.Host).TrimEnd('/');
+
             _httpClient.BaseAddress = new Uri(baseUrl);
             _httpClient.Timeout = TimeSpan.FromSeconds(_config.Timeout);
 
@@ -55,6 +56,7 @@ namespace SendifyClientNet
             }
 
             string trimmed = host.Trim();
+
             if (trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
                 trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
             {
@@ -102,9 +104,11 @@ namespace SendifyClientNet
             if (attachments != null && attachments.Length > 0)
             {
                 var list = new List<Dictionary<string, object>>(attachments.Length);
+
                 for (int i = 0; i < attachments.Length; i++)
                 {
                     Attachment a = attachments[i];
+
                     list.Add(new Dictionary<string, object>
                     {
                         ["FileName"] = a.FileName,
@@ -163,6 +167,7 @@ namespace SendifyClientNet
                 catch (OperationCanceledException oce) when (!cancellationToken.IsCancellationRequested)
                 {
                     lastException = oce;
+
                     if (attempt < attempts - 1)
                     {
                         await Task.Delay(TimeSpan.FromSeconds(_config.BackoffSeconds * (attempt + 1)), cancellationToken).ConfigureAwait(false);
@@ -174,6 +179,7 @@ namespace SendifyClientNet
                 catch (HttpRequestException hre)
                 {
                     lastException = hre;
+
                     if (attempt < attempts - 1)
                     {
                         await Task.Delay(TimeSpan.FromSeconds(_config.BackoffSeconds * (attempt + 1)), cancellationToken).ConfigureAwait(false);
@@ -220,6 +226,7 @@ namespace SendifyClientNet
                 }
 
                 var s = value as string;
+
                 if (s != null)
                 {
                     WriteString(sb, s);
@@ -251,6 +258,7 @@ namespace SendifyClientNet
                 }
 
                 var obj = value as Dictionary<string, object>;
+
                 if (obj != null)
                 {
                     WriteObject(sb, obj);
@@ -258,6 +266,7 @@ namespace SendifyClientNet
                 }
 
                 var arr = value as string[];
+
                 if (arr != null)
                 {
                     sb.Append('[');
@@ -275,6 +284,7 @@ namespace SendifyClientNet
                 }
 
                 var listObj = value as List<Dictionary<string, object>>;
+
                 if (listObj != null)
                 {
                     sb.Append('[');
@@ -319,6 +329,7 @@ namespace SendifyClientNet
             private static void WriteString(StringBuilder sb, string s)
             {
                 sb.Append('"');
+
                 for (int i = 0; i < s.Length; i++)
                 {
                     char c = s[i];

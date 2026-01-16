@@ -54,7 +54,7 @@ public class Wr21Service
             }
         }
 
-        _streamService.WriteLine($"sendsms {phone} \"{message.RemoveDiacritics()}\"");
+        _streamService.WriteLine($"sendsms {phone} \"{message.ReplacePolishDiacritics().NormalizeText()}\"");
 
         var startDate = DateTime.Now;
 
@@ -71,12 +71,12 @@ public class Wr21Service
 
             line += newline;
 
-            if (line != null && line.Contains("SMS send success"))
+            if (line.Contains("SMS send success"))
             {
                 return true;
             }
 
-            if (line != null && (line.Contains("SMS send failure") || newline.RemoveLineEndings().Equals("ERROR")))
+            if (line.Contains("SMS send failure") || newline.RemoveLineEndings().Equals("ERROR"))
             {
                 return false;
             }
