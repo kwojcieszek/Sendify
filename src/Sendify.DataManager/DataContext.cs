@@ -11,7 +11,7 @@ public class DataContext : DbContext
     private static string? _defaultDatabaseName;
 
     public DbSet<Message> Messages { get; set; }
-    public DbSet<Message> MessagesArchive { get; set; }
+    public DbSet<MessageArchive> MessagesArchive { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Pattern> Patterns { get; set; }

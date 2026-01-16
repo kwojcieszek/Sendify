@@ -48,7 +48,7 @@ public class MessagesSenderSmsHttp : IMessagesSender
             {
                 var result = await SendMessage(recipient, msg);
 
-                if (recipient != null && !result)
+                if (!result)
                 {
                     return new ResultMessage
                     {
@@ -71,9 +71,9 @@ public class MessagesSenderSmsHttp : IMessagesSender
     {
         var httpClient = new HttpClient();
 
-        if(phoneNumber.Substring(0,2) == "48")
+        if(phoneNumber[..2] == "48")
         {
-            phoneNumber = phoneNumber.Substring(2, phoneNumber.Length-2);
+            phoneNumber = phoneNumber[2..];
         }
 
         var response = await httpClient.GetAsync($"{_apiUrl}/sms.php?phonenumber={phoneNumber}&message={Uri.EscapeDataString(messageText)}");
