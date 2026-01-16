@@ -40,7 +40,7 @@ public class MessagesSenderSmsHttp : IMessagesSender
             };
         }
 
-        var messages = message.Body.RemoveDiacritics().SplitByLength(160);
+        var messages = message.Body.Normalize().SplitByLength(160);
 
         foreach (var msg in messages)
         {
