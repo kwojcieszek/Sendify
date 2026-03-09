@@ -35,7 +35,7 @@ class SendifyConfig:
     timeout: float = 15.0  # seconds
     retries: int = 2  # number of retry attempts on transient failures
     backoff_seconds: float = 0.6  # base backoff between retries
-    verify_ssl: bool = False  # whether to verify SSL certificates
+    verify_ssl: bool = True  # whether to verify SSL certificates
 
 
 @dataclass(frozen=True)
@@ -132,7 +132,7 @@ class SendifyClient:
         self,
         *,
         message_type: int,
-        sender: Optional[str],
+        sender: Optional[str]=None,
         recipients: List[str],
         body: str,
         subject: Optional[str] = None,
